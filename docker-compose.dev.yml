@@ -1,0 +1,32 @@
+ version: "3.8"
+
+ services:
+   app:
+     depends_on:
+      - 'mongo'
+     image: node:16-alpine3.14
+     command: sh -c "npm install && npm run start:dev"
+     ports:
+       - 8000:3000
+     working_dir: /app/app
+     volumes:
+       - ./:/app
+     environment:
+      NODE_ENV: development
+      MONGO_URI: mongodb://dev:login123@mongo:27017/nestjs_dev
+   mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: devlogin123
+      MONGO_INITDB_USERNAME: dev
+      MONGO_INITDB_PASSWORD: devlogin123
+      MONGO_INITDB_DATABASE: nestjs
+ volumes:
+   mongodb:
+   mongodb_config:
