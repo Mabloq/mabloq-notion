@@ -8,6 +8,13 @@ import { ParagraphBlockSchema } from './schemas/blocks/paragraph.schema';
 import { Heading1BlockSchema } from './schemas/blocks/heading-1.schema';
 import { ImageBlockSchema } from './schemas/common/image.schema';
 import { CodeBlockSchema } from './schemas/blocks/code.schema';
+import {
+  DatabaseParentSchema,
+  PageParentSchema,
+  Parent,
+  ParentEnum,
+  ParentSchema,
+} from './schemas/blocks/page.schema';
 
 @Module({
   imports: [
