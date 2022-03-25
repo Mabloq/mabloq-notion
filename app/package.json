@@ -27,13 +27,15 @@
     "@nestjs/mongoose": "^9.0.2",
     "@nestjs/passport": "^8.2.1",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/swagger": "^5.2.1",
     "@typegoose/typegoose": "^9.7.0",
     "mongoose": "^6.2.6",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -58,6 +60,9 @@
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.10.1",
     "typescript": "^4.3.5"
+  },
+  "overrides": {
+    "minimist@<=1.2.5": "1.2.6"
   },
   "jest": {
     "moduleFileExtensions": [

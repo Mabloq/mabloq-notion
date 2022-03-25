@@ -15,7 +15,6 @@ export class Block {
     required: true,
     enum: Object.values(ObjectEnum),
     message: '{VALUE} is not supported',
-    index: true,
   })
   object!: string;
   @Prop({
@@ -23,6 +22,13 @@ export class Block {
     required: true,
     enum: Object.values(BlockEnum),
     message: '{VALUE} is not supported',
+    index: {
+      partialFilterExpression: {
+        object: {
+          $in: ['foo', 'bar'],
+        },
+      },
+    },
   })
   type!: string;
   @Prop()
