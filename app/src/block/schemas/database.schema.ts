@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Block, BlockSchema } from '../block.schema';
-import { RichText, RichTextSchema } from '../common/rich-text.schema';
-import { Image, ImageSchema } from '../common/image.schema';
-import { PropertySchema, Property } from '../properties/ property.schema';
+import { Block, BlockSchema } from './block.schema';
+import { RichText, RichTextSchema } from './common/rich-text.schema';
+import { Image, ImageSchema } from './common/image.schema';
+import { PropertySchema, Property } from './properties/ property.schema';
 
 @Schema({ _id: false })
 export class Page {

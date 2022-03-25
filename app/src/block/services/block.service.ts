@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Post } from '@nestjs/common';
 import { CreateBlockDto } from '../dto/create-block.dto';
 import { UpdateBlockDto } from '../dto/update-block.dto';
-import { Model } from 'mongoose';
+import { Model, FilterQuery } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Block, BlockDocument } from '../schemas/block.schema';
 import {
@@ -13,20 +13,26 @@ import {
 export class BlockService {
   constructor(@InjectModel(Block.name) private blockModel: Model<Block>) {}
 
-  create(createBlockDto: CreateBlockDto): Promise<Block> {
-    const createdBlock = new this.blockModel(createBlockDto);
+  async insertOne(createBlockDto: CreateBlockDto): Promise<Block> {
+    const createdBlock = await this.blockModel.create(createBlockDto);
     console.log(createBlockDto);
 
     console.log(createdBlock.toJSON());
     return createdBlock.save();
   }
 
-  findAll() {
-    return `This action returns all block`;
+  async findMany(blockIds: string[]) {
+    const findQuery: FilterQuery<Block> = {
+      _id: {
+        $in: blockIds,
+      },
+    };
+    const fetchedBlocks = await this.blockModel.find(findQuery).exec();
+    return fetchedBlocks;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} block`;
+  async findOne(id: string) {
+    return await this.blockModel.findById(id);
   }
 
   update(id: number, updateBlockDto: UpdateBlockDto) {

@@ -1,9 +1,14 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { BlockModelRefs, BlockModels } from './extra-models/block-models';
 export class CreateBlockDto {
-  object: 'block';
-  type: string;
-  created_time: string;
-  updated_by: string; //TODO: Partial<User>
-  last_edited_time: string;
-  has_children: boolean;
-  [key: string]: any;
+  @ApiProperty({ required: true })
+  block_id: string;
+  @ApiProperty({
+    type: 'array',
+    items: {
+      oneOf: BlockModelRefs,
+    },
+    required: true,
+  })
+  children: BlockModels;
 }

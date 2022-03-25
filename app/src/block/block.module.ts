@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { BlockService } from './block.service';
-import { BlockController } from './block.controller';
+import { BlockService } from './services/block.service';
+import { BlockController } from './controllers/block.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Block, BlockSchema } from './schemas/block.schema';
 import { BlockEnum } from './schemas/common/block-enum';
@@ -14,7 +14,7 @@ import {
   Parent,
   ParentEnum,
   ParentSchema,
-} from './schemas/blocks/page.schema';
+} from './schemas/page.schema';
 
 @Module({
   imports: [

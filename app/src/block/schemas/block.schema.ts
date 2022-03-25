@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
 
 import { Document } from 'mongoose';
 import { BlockEnum } from './common/block-enum';
@@ -36,6 +37,11 @@ export class Block {
 
   @Prop()
   has_children: boolean;
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Block' }],
+    required: false,
+  })
+  children: Block[];
 }
 
 export const BlockSchema = SchemaFactory.createForClass(Block);
