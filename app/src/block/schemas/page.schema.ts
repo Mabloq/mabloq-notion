@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Block, BlockSchema } from '../block.schema';
-import { RichText, RichTextSchema } from '../common/rich-text.schema';
-import { Image, ImageSchema } from '../common/image.schema';
-import { PropertySchema, Property } from '../properties/ property.schema';
+import { Block, BlockSchema } from './block.schema';
+import { RichText, RichTextSchema } from './common/rich-text.schema';
+import { Image, ImageSchema } from './common/image.schema';
+import { PropertySchema, Property } from './properties/ property.schema';
 
 export enum ParentEnum {
   DATABASE_ID = 'database_id',
