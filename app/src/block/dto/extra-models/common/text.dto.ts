@@ -10,5 +10,5 @@ export class TextDto {
     type: 'string',
     required: false,
   })
-  link: string;
+  link?: string;
 }
