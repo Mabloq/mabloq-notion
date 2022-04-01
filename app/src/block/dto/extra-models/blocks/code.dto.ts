@@ -3,9 +3,9 @@ import { RichTextDto } from '../common/rich-text.dto';
 import { BaseBlockDto } from '../base-block.dto';
 
 @ApiExtraModels(RichTextDto)
-export class Heading1Dto {
+export class CodeDto {
   @ApiProperty({ required: false })
-  color: string;
+  language: string;
   @ApiProperty({
     required: true,
     type: 'array',
@@ -14,11 +14,10 @@ export class Heading1Dto {
   rich_text: RichTextDto[];
 }
 
-@ApiExtraModels(Heading1Dto)
-export class Heading1BlockDto extends BaseBlockDto {
+@ApiExtraModels(CodeDto)
+export class CodeBlockDto extends BaseBlockDto {
   @ApiProperty({
-    type: 'object',
-    items: { $ref: getSchemaPath(Heading1Dto) },
+    type: { $ref: getSchemaPath(CodeDto) },
   })
-  heading_1: Heading1Dto;
+  code: CodeDto;
 }

@@ -1,6 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
-
-export class TextDto {
+import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
+import { TextInterface } from 'src/block/interfaces/common/text.interface';
+@ApiExtraModels()
+export class TextDto implements TextInterface {
   @ApiProperty({
     type: 'string',
     required: true,
