@@ -4,3 +4,9 @@ export enum ObjectEnum {
   DATABASE = 'database',
   USER = 'user',
 }
+
+export type ObjectType =
+  | ObjectEnum.BLOCK
+  | ObjectEnum.PAGE
+  | ObjectEnum.DATABASE
+  | ObjectEnum.USER;

@@ -7,5 +7,6 @@ export class NumberProperty {
   number: number;
 }
 
-export const NumberSchema = SchemaFactory.createForClass(NumberProperty);
+export const NumberPropertySchema =
+  SchemaFactory.createForClass(NumberProperty);
 export type NumberPropertyDocument = NumberProperty & Document;

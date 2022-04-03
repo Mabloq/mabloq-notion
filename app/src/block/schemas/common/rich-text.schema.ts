@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
 export class RichText {
-  @Prop({ required: true })
+  @Prop({ required: true, default: 'text' })
   type: string;
   @Prop(
     raw({

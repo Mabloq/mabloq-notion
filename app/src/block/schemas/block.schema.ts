@@ -1,9 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
-
 import { Document } from 'mongoose';
-import { BlockInterface } from '../interfaces/block.interface';
-import { BlockEnum } from './common/block-enum';
+import { BaseBlockInterface } from '../interfaces/block.interface';
+import { BlockEnum, BlockType } from './common/block-enum';
 import { ObjectEnum } from './common/object-enum';
 export type BlockDocument = Block & Document;
 
@@ -11,28 +10,21 @@ export type BlockDocument = Block & Document;
   discriminatorKey: 'type',
   timestamps: { createdAt: 'created_time', updatedAt: 'last_edited_time' },
 })
-export class Block implements BlockInterface {
+export class Block implements BaseBlockInterface {
   @Prop({
     type: String,
     required: true,
     enum: Object.values(ObjectEnum),
     message: '{VALUE} is not supported',
   })
-  object!: string;
+  object!: ObjectEnum.BLOCK;
   @Prop({
     type: String,
     required: true,
     enum: Object.values(BlockEnum),
     message: '{VALUE} is not supported',
-    index: {
-      partialFilterExpression: {
-        object: {
-          $in: ['foo', 'bar'],
-        },
-      },
-    },
   })
-  type!: string;
+  type!: BlockType;
 
   @Prop()
   updated_by: string; //TODO: Partial<User>
@@ -44,7 +36,7 @@ export class Block implements BlockInterface {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Block' }],
     required: false,
   })
-  children: Block[];
+  children: string[];
 
   @Prop({
     type: Date,

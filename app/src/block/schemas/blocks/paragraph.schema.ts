@@ -27,14 +27,14 @@ export const ParagraphSchema = SchemaFactory.createForClass(Paragraph);
 
 @Schema({ _id: false })
 export class ParagraphBlock implements ParagraphBlockInterface {
-  @Prop({ type: ParagraphSchema, required: true })
   object: string;
   type: string;
   updated_by: string;
   created_time: string;
   last_edited_time: string;
   has_children: boolean;
-  children?: BlockInterface[];
+  children?: string[];
+  @Prop({ type: ParagraphSchema, required: true })
   paragraph: ParagraphInterface;
 }
 
