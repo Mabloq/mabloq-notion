@@ -11,7 +11,7 @@ export interface BaseBlockInterface {
   last_edited_time: string;
   updated_by: string;
   has_children: boolean;
-  children?: BlockInterface[];
+  children?: string[];
 }
 
 export type BlockInterface =
