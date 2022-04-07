@@ -1,6 +1,5 @@
 import { RichTextInterface } from '../../common/rich-text.interface';
-import { BasePropertyInterface } from '../property.interface';
-
-export interface RichTextPropertyInterface extends BasePropertyInterface {
+export interface RichTextPropertyInterface {
+  type: 'rich_text';
   rich_text: RichTextInterface[];
 }

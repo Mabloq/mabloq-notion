@@ -1,5 +1,4 @@
-import { BasePropertyInterface } from '../property.interface';
-
-export interface SelectPropertyInterface extends BasePropertyInterface {
+export interface SelectPropertyInterface {
+  type: 'select';
   select: { name: string };
 }

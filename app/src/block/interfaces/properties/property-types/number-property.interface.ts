@@ -1,5 +1,4 @@
-import { BasePropertyInterface } from '../property.interface';
-
-export interface NumberPropertyInterface extends BasePropertyInterface {
+export interface NumberPropertyInterface {
+  type: 'number';
   number: number;
 }

@@ -5,5 +5,6 @@ export interface SelectOptionInterface {
 }
 
 export interface SelectConfigInterface {
+  type: 'select';
   options: SelectOptionInterface[];
 }

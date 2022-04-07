@@ -1,5 +1,4 @@
-import { BasePropertyInterface } from '../property.interface';
-
-export interface MultiSelectPropertyInterface extends BasePropertyInterface {
-  multi_select: { name: string }[];
+export interface MultiSelectPropertyInterface {
+  type: 'multi_select';
+  multi_select: Array<{ name: string }>;
 }
