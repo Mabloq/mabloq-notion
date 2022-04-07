@@ -1,6 +1,5 @@
 import { Injectable, Post } from '@nestjs/common';
 import { CreateBlockDto } from '../dto/create-block.dto';
-import { UpdateBlockDto } from '../dto/update-block.dto';
 import { Model, FilterQuery } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Block, BlockDocument } from '../schemas/block.schema';
@@ -15,9 +14,7 @@ export class BlockService {
 
   async insertOne(createBlockDto: CreateBlockDto): Promise<Block> {
     const createdBlock = await this.blockModel.create(createBlockDto);
-    console.log(createBlockDto);
 
-    console.log(createdBlock.toJSON());
     return createdBlock.save();
   }
 
@@ -35,7 +32,10 @@ export class BlockService {
     return await this.blockModel.findById(id);
   }
 
-  update(id: number, updateBlockDto: UpdateBlockDto) {
+  async findAll() {
+    return await this.blockModel.find({}).limit(10);
+  }
+  update(id: number) {
     return `This action updates a #${id} block`;
   }
 
