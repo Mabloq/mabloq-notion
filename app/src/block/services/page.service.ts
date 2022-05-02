@@ -16,6 +16,8 @@ import {
   PropertyConfigInterface,
 } from '../interfaces/properties/property.interface';
 import { DatabaseService } from './database.service';
+import PageParentValidator from '../utils/page-validators/validators/page-parent-validator';
+import DatabaseParentValidator from '../utils/page-validators/validators/database-parent-validator';
 
 @Injectable()
 export class PageService {
@@ -39,41 +41,17 @@ export class PageService {
 
     return pagePropertyeKeys.every((key) => databasePropertyKeys.includes(key));
   }
+
   async insertOne(createPageDto: CreatePageDto): Promise<HigherOrderBlock> {
     if (isPageParent(createPageDto.parent)) {
-      if (!this.onlyTitleProperties(createPageDto.properties)) {
-        console.log(
-          'Invalid Field Exception: Pages with parents of type page can only use title property',
-        );
-        throw new Error(
-          'Invalid Field Exception: Pages with parents of type page can only use title property',
-        );
-      }
-    }
-
-    if (isDatabaseParent(createPageDto.parent)) {
+      const validator = new PageParentValidator(createPageDto);
+      await validator.validate();
+    } else if (isDatabaseParent(createPageDto.parent)) {
       const parentId = createPageDto.parent.database_id;
       const database = await this.dataBaseService.findOne(parentId);
-      console.log(database);
-      if (
-        !this.onlyDatabaseProperties(
-          createPageDto.properties,
-          database.properties,
-        )
-      ) {
-        const databaseFields = Object.keys(database.properties);
-        const notIncludedInDatabaseConfig = Object.keys(
-          createPageDto.properties,
-        ).filter((pageField) => !databaseFields.includes(pageField));
-        throw new Error(
-          `Invalid Field exception: {${notIncludedInDatabaseConfig.join(
-            ', ',
-          )}} is not a valid field on database: {${databaseFields.join(', ')}}`,
-        );
-      }
+      const dbParentValidator = new DatabaseParentValidator(createPageDto);
+      await dbParentValidator.validate(database.properties);
     }
-
-    // if parent is database, the page properites must correspond to database parent property
 
     //check if CreatePageDto has blocks children
     //If has block children, create all of othem and map results to array of ObjectIds and add them to Page
