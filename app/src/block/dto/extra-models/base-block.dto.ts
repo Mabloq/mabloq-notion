@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BlockEnum } from 'src/block/schemas/common/block-enum';
+import { BlockEnum } from '../../../block/schemas/common/block-enum';
 
 export class BaseBlockDto {
   object: 'block';

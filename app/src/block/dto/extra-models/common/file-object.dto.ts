@@ -5,7 +5,7 @@ export class FileObjectDto {
     default: 'external',
     required: true,
   })
-  type: string;
+  type: 'external';
   @ApiProperty({ required: true })
   url: string;
 }
