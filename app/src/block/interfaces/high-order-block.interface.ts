@@ -6,9 +6,9 @@ export interface HigherOrderBlockInterface {
   object: string;
   parent?: ParentInerface;
   parent_id?: string;
-  archived: boolean;
-  cover: FileObjectInterface;
-  icon: FileObjectInterface;
+  archived?: boolean;
+  cover?: FileObjectInterface;
+  icon?: FileObjectInterface;
   created_time: string;
   created_by: string;
   last_edited_time: string;

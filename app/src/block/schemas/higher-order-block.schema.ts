@@ -58,7 +58,7 @@ export class HigherOrderBlock implements HigherOrderBlockInterface {
   last_edited_by: string; //TODO: Partial<User>
 }
 
-export type HighOrderBlockDocument = HigherOrderBlock & Document;
+export type HigherOrderBlockDocument = HigherOrderBlock & Document;
 export const HigherOrderBlockSchema =
   SchemaFactory.createForClass(HigherOrderBlock);
 

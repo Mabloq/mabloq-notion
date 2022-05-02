@@ -8,13 +8,16 @@ import { ParagraphBlockSchema } from './schemas/blocks/paragraph.schema';
 import { Heading1BlockSchema } from './schemas/blocks/heading-1.schema';
 import { ImageBlockSchema } from './schemas/common/image.schema';
 import { CodeBlockSchema } from './schemas/blocks/code.schema';
+import { DatabaseSchema } from './schemas/database.schema';
+import { PageSchema } from './schemas/page.schema';
 import {
-  DatabaseParentSchema,
-  PageParentSchema,
-  Parent,
-  ParentEnum,
-  ParentSchema,
-} from './schemas/page.schema';
+  HigherOrderBlock,
+  HigherOrderBlockSchema,
+} from './schemas/higher-order-block.schema';
+import { ObjectEnum } from './schemas/common/object-enum';
+import { DatabaseService } from './services/database.service';
+import { DatabaseController } from './controllers/database.controller';
+import { PageService } from './services/page.service';
 
 @Module({
   imports: [
@@ -30,8 +33,18 @@ import {
         ],
       },
     ]),
+    MongooseModule.forFeature([
+      {
+        name: HigherOrderBlock.name,
+        schema: HigherOrderBlockSchema,
+        discriminators: [
+          { name: ObjectEnum.PAGE, schema: PageSchema },
+          { name: ObjectEnum.DATABASE, schema: DatabaseSchema },
+        ],
+      },
+    ]),
   ],
-  providers: [BlockService],
-  controllers: [BlockController],
+  providers: [BlockService, DatabaseService, PageService],
+  controllers: [BlockController, DatabaseController],
 })
 export class BlockModule {}
