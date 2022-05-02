@@ -10,11 +10,7 @@ import {
   isDatabaseParent,
   isPageParent,
 } from '../utils/type-guards/parent-types';
-import {
-  PropertiesConfigInterface,
-  PropertiesInterface,
-  PropertyConfigInterface,
-} from '../interfaces/properties/property.interface';
+
 import { DatabaseService } from './database.service';
 import PageParentValidator from '../utils/page-validators/validators/page-parent-validator';
 import DatabaseParentValidator from '../utils/page-validators/validators/database-parent-validator';
@@ -26,21 +22,6 @@ export class PageService {
     private higherOrderBlockModel: Model<HigherOrderBlock>,
     private dataBaseService: DatabaseService,
   ) {}
-
-  private onlyTitleProperties(properties: PropertiesInterface) {
-    const fieldValues = Object.keys(properties);
-    return fieldValues.length == 1 && fieldValues[0] == 'title';
-  }
-
-  private onlyDatabaseProperties(
-    pageProperites: PropertiesInterface,
-    DatabaseProperties: PropertiesConfigInterface,
-  ) {
-    const pagePropertyeKeys = Object.keys(pageProperites);
-    const databasePropertyKeys = Object.keys(DatabaseProperties);
-
-    return pagePropertyeKeys.every((key) => databasePropertyKeys.includes(key));
-  }
 
   async insertOne(createPageDto: CreatePageDto): Promise<HigherOrderBlock> {
     if (isPageParent(createPageDto.parent)) {
