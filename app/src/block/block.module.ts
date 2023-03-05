@@ -18,6 +18,7 @@ import { ObjectEnum } from './schemas/common/object-enum';
 import { DatabaseService } from './services/database.service';
 import { DatabaseController } from './controllers/database.controller';
 import { PageService } from './services/page.service';
+import { WorkspaceSchema } from './schemas/workspace.schema';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { PageService } from './services/page.service';
         discriminators: [
           { name: ObjectEnum.PAGE, schema: PageSchema },
           { name: ObjectEnum.DATABASE, schema: DatabaseSchema },
+          { name: ObjectEnum.WORKSPACE, schema: WorkspaceSchema },
         ],
       },
     ]),
