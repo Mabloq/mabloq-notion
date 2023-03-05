@@ -1,4 +1,4 @@
-import { ApiProperty, ApiExtraModels } from '@nestjs/swagger';
+import { ApiProperty, ApiExtraModels, getSchemaPath } from '@nestjs/swagger';
 import { RichTextInterface } from 'src/block/interfaces/common/rich-text.interface';
 import { AnnotationDto } from './annotations.dto';
 import { TextDto } from './text.dto';
@@ -12,8 +12,11 @@ export class RichTextDto implements RichTextInterface {
   type: 'rich_text';
   @ApiProperty()
   plain_text: string;
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: true, items: { $ref: getSchemaPath(TextDto) } })
   text: TextDto;
-  @ApiProperty({ required: false })
+  @ApiProperty({
+    required: false,
+    items: { $ref: getSchemaPath(AnnotationDto) },
+  })
   annotation?: AnnotationDto;
 }

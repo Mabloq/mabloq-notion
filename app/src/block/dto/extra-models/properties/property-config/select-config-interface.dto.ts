@@ -1,4 +1,4 @@
-import { ApiExtraModels } from '@nestjs/swagger';
+import { ApiExtraModels, ApiProperty, getSchemaPath } from '@nestjs/swagger';
 import {
   SelectConfigInterface,
   SelectOptionInterface,
@@ -12,7 +12,12 @@ export class SelectOptionDto
   name: string;
 }
 
-@ApiExtraModels()
+@ApiExtraModels(SelectOptionDto)
 export class SelectConfigDto implements SelectConfigInterface {
+  type: 'select';
+  @ApiProperty({
+    type: 'array',
+    anyOf: [{ $ref: getSchemaPath(SelectOptionDto) }],
+  })
   options: SelectOptionInterface[];
 }
