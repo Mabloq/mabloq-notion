@@ -1,9 +1,9 @@
 import { BlockDTOs } from './extra-models/block-models';
 import { ApiProperty, ApiExtraModels, getSchemaPath } from '@nestjs/swagger';
-import { ParagraphBlockDto } from './extra-models/blocks/paragraph.dto';
-import { Heading1BlockDto } from './extra-models/blocks/heading1.dto';
-import { CodeBlockDto } from './extra-models/blocks/code.dto';
-import { ImageBlockDto } from './extra-models/blocks/image.dto';
+import { ParagraphDto } from './extra-models/blocks/paragraph.dto';
+import { Heading1Dto } from './extra-models/blocks/heading1.dto';
+import { CodeDto } from './extra-models/blocks/code.dto';
+import { ImageDto } from './extra-models/blocks/image.dto';
 import { BlockInterface } from '../interfaces';
 import { BlockEnum } from '../schemas/common/block-enum';
 import { Schema } from 'mongoose';
@@ -38,44 +38,44 @@ export class CreateBlockDto implements Omit<BlockInterface, 'id' | 'content'> {
     type: 'array',
     items: {
       anyOf: [
-        { $ref: getSchemaPath(ParagraphBlockDto) },
-        { $ref: getSchemaPath(CodeBlockDto) },
-        { $ref: getSchemaPath(Heading1BlockDto) },
-        { $ref: getSchemaPath(ImageBlockDto) },
+        { $ref: getSchemaPath(ParagraphDto) },
+        { $ref: getSchemaPath(CodeDto) },
+        { $ref: getSchemaPath(Heading1Dto) },
+        { $ref: getSchemaPath(ImageDto) },
       ],
     },
   })
   children: (BlockDTOs | Schema.Types.ObjectId)[];
 }
 
-@ApiExtraModels(CodeBlockDto)
+@ApiExtraModels(CodeDto)
 export class CreateCodeBlockDto extends CreateBlockDto {
   @ApiProperty({
-    items: { $ref: getSchemaPath(CodeBlockDto) },
+    items: { $ref: getSchemaPath(CodeDto) },
   })
-  [BlockEnum.CODE]: CodeBlockDto;
+  [BlockEnum.CODE]: CodeDto;
 }
 
-@ApiExtraModels(ParagraphBlockDto)
+@ApiExtraModels(ParagraphDto)
 export class CreateParagraphBlockDto extends CreateBlockDto {
   @ApiProperty({
-    items: { $ref: getSchemaPath(ParagraphBlockDto) },
+    items: { $ref: getSchemaPath(ParagraphDto) },
   })
-  [BlockEnum.PARAGRAPH]: ParagraphBlockDto;
+  [BlockEnum.PARAGRAPH]: ParagraphDto;
 }
 
-@ApiExtraModels(Heading1BlockDto)
+@ApiExtraModels(Heading1Dto)
 export class CreateHeading1BlockDto extends CreateBlockDto {
   @ApiProperty({
-    items: { $ref: getSchemaPath(Heading1BlockDto) },
+    items: { $ref: getSchemaPath(Heading1Dto) },
   })
-  [BlockEnum.HEADING1]: Heading1BlockDto;
+  [BlockEnum.HEADING1]: Heading1Dto;
 }
 
-@ApiExtraModels(ImageBlockDto)
+@ApiExtraModels(ImageDto)
 export class CreateImageBlockDto extends CreateBlockDto {
   @ApiProperty({
-    items: { $ref: getSchemaPath(ImageBlockDto) },
+    items: { $ref: getSchemaPath(ImageDto) },
   })
-  [BlockEnum.IMAGE]: ImageBlockDto;
+  [BlockEnum.IMAGE]: ImageDto;
 }

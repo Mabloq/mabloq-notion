@@ -23,7 +23,7 @@ export class BlockService {
       | CreateParagraphBlockDto
       | CreateHeading1BlockDto
       | CreateImageBlockDto,
-  ): Promise<Block> {
+  ): Promise<Block | ParagraphBlock> {
     if (createBlockDto.children.length) {
       const childrenBlocks = await this.blockModel.create(
         createBlockDto.children,
@@ -35,6 +35,7 @@ export class BlockService {
         children: childrenBlocksIds,
       };
       const createdBlock = await this.blockModel.create(cblock);
+      console.log(createdBlock);
       return createdBlock;
     } else {
       const createdBlock = await this.blockModel.create(createBlockDto);

@@ -1,7 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 import { BaseBlockInterface } from '../interfaces/block.interface';
+import { CodeBlockSchema } from './blocks/code.schema';
+import { Heading1BlockSchema } from './blocks/heading-1.schema';
+import { ImageBlockSchema } from './blocks/image.schema';
+import { ParagraphBlockSchema } from './blocks/paragraph.schema';
 import { BlockEnum, BlockType } from './common/block-enum';
 import { ObjectEnum } from './common/object-enum';
 export type BlockDocument = Block & Document;
@@ -14,7 +18,8 @@ export class Block implements BaseBlockInterface {
   @Prop({
     type: String,
     required: true,
-    enum: Object.values(ObjectEnum),
+    default: ObjectEnum.BLOCK,
+    enum: [ObjectEnum.BLOCK],
     message: '{VALUE} is not supported',
   })
   object!: ObjectEnum.BLOCK;
@@ -49,3 +54,15 @@ export class Block implements BaseBlockInterface {
 }
 
 export const BlockSchema = SchemaFactory.createForClass(Block);
+
+// BlockSchema.path<MongooseSchema.Types.Subdocument>('code').discriminator(
+//   'code',
+//   CodeBlockSchema,
+// );
+
+BlockSchema.discriminators = {
+  code: CodeBlockSchema,
+  paragraph: ParagraphBlockSchema,
+  heading_1: Heading1BlockSchema,
+  image: ImageBlockSchema,
+};

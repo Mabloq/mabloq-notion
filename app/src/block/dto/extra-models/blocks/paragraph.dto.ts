@@ -3,14 +3,12 @@ import { RichTextDto } from '../common/rich-text.dto';
 import { BaseBlockDto } from '../base-block.dto';
 import { BlockModelRefs, BlockDTOs } from '../block-models';
 import { BlockEnum } from 'src/block/schemas/common/block-enum';
-import { CodeBlockDto } from './code.dto';
-import { ImageBlockDto } from './image.dto';
-import { Heading1BlockDto } from './heading1.dto';
+import { CodeDto } from './code.dto';
+import { ImageDto } from './image.dto';
+import { Heading1Dto } from './heading1.dto';
 
-@ApiExtraModels(RichTextDto, CodeBlockDto, ImageBlockDto, Heading1BlockDto)
+@ApiExtraModels(RichTextDto, CodeDto, ImageDto, Heading1Dto)
 export class ParagraphDto {
-  @ApiProperty({ required: false })
-  color?: string;
   @ApiProperty({
     type: 'array',
     items: { $ref: getSchemaPath(RichTextDto) },
@@ -21,26 +19,12 @@ export class ParagraphDto {
     type: 'array',
     items: {
       anyOf: [
-        { $ref: getSchemaPath(CodeBlockDto) },
-        { $ref: getSchemaPath(ImageBlockDto) },
-        { $ref: getSchemaPath(Heading1BlockDto) },
+        { $ref: getSchemaPath(CodeDto) },
+        { $ref: getSchemaPath(ImageDto) },
+        { $ref: getSchemaPath(Heading1Dto) },
       ],
     },
     required: false,
   })
   children?: BlockDTOs[];
-}
-
-@ApiExtraModels(ParagraphDto)
-export class ParagraphBlockDto extends BaseBlockDto {
-  @ApiProperty({
-    required: true,
-    default: BlockEnum.PARAGRAPH,
-    enum: [BlockEnum.PARAGRAPH],
-  })
-  type: string;
-  @ApiProperty({
-    items: { $ref: getSchemaPath(ParagraphDto) },
-  })
-  paragraph: ParagraphDto;
 }

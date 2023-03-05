@@ -14,17 +14,3 @@ export class Heading1Dto {
   })
   rich_text: RichTextDto[];
 }
-
-@ApiExtraModels(Heading1Dto)
-export class Heading1BlockDto extends BaseBlockDto {
-  @ApiProperty({
-    required: true,
-    default: BlockEnum.HEADING1,
-    enum: [BlockEnum.HEADING1],
-  })
-  type: string;
-  @ApiProperty({
-    items: { $ref: getSchemaPath(Heading1Dto) },
-  })
-  heading_1: Heading1Dto;
-}

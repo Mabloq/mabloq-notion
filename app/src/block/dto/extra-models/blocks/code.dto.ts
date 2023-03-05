@@ -14,17 +14,3 @@ export class CodeDto {
   })
   rich_text: RichTextDto[];
 }
-
-@ApiExtraModels(CodeDto)
-export class CodeBlockDto extends BaseBlockDto {
-  @ApiProperty({
-    required: true,
-    default: BlockEnum.CODE,
-    enum: [BlockEnum.CODE],
-  })
-  type: string;
-  @ApiProperty({
-    items: { $ref: getSchemaPath(CodeDto) },
-  })
-  code: CodeDto;
-}
