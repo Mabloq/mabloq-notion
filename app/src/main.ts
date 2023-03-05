@@ -2,6 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { BlockModule } from './block/block.module';
+import {
+  CreateCodeBlockDto,
+  CreateHeading1BlockDto,
+  CreateParagraphBlockDto,
+} from './block/dto/create-block.dto';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()

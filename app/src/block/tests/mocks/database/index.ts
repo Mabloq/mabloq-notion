@@ -1,5 +1,6 @@
 import { CreateDatabaseDto } from 'src/block/dto/database/create-database.dto';
 import { DatabaseInterface } from 'src/block/interfaces/database.interface';
+import { ObjectEnum } from 'src/block/schemas/common/object-enum';
 import { DatabaseDocument } from 'src/block/schemas/database.schema';
 import { ParentInerface } from '../../../interfaces/common/parent.interface';
 import { PropertiesConfigInterface } from '../../../interfaces/properties/property.interface';
@@ -8,7 +9,7 @@ import { HigherOrderBlockDocument } from '../../../schemas/higher-order-block.sc
 const dateIso = new Date().toISOString();
 const mockBaseDatabase = (
   id = 'a uuid',
-  object = 'page',
+  object = ObjectEnum.DATABASE,
   last_edited_by = 'mabloq',
   created_by = 'mabloq',
 ): Omit<DatabaseInterface, 'properties'> => ({

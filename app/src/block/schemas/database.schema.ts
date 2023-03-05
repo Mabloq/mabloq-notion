@@ -13,6 +13,7 @@ import { SelectPropertySchema } from './properties/property-types/select-propert
 import { MultiSelectPropertySchema } from './properties/property-types/multi-select-property.schema';
 import { SelectConfigSchema } from './properties/property-config/select-config-schema';
 import { NumberConfigSchema } from './properties/property-config/number-config-schema';
+import { ObjectType } from './common/object-enum';
 
 @Schema({ _id: false })
 export class Database implements DatabaseInterface {

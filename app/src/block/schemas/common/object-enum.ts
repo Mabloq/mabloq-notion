@@ -2,6 +2,7 @@ export enum ObjectEnum {
   BLOCK = 'block',
   PAGE = 'page',
   DATABASE = 'database',
+  WORKSPACE = 'workspace',
   USER = 'user',
 }
 
