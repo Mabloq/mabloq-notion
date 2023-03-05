@@ -1,6 +1,7 @@
 import { ApiProperty, ApiExtraModels, getSchemaPath } from '@nestjs/swagger';
 import { RichTextDto } from '../common/rich-text.dto';
 import { BaseBlockDto } from '../base-block.dto';
+import { BlockEnum } from 'src/block/schemas/common/block-enum';
 
 @ApiExtraModels(RichTextDto)
 export class CodeDto {
@@ -17,7 +18,13 @@ export class CodeDto {
 @ApiExtraModels(CodeDto)
 export class CodeBlockDto extends BaseBlockDto {
   @ApiProperty({
-    type: { $ref: getSchemaPath(CodeDto) },
+    required: true,
+    default: BlockEnum.CODE,
+    enum: [BlockEnum.CODE],
+  })
+  type: string;
+  @ApiProperty({
+    items: { $ref: getSchemaPath(CodeDto) },
   })
   code: CodeDto;
 }

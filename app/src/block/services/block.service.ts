@@ -1,5 +1,10 @@
 import { Injectable, Post } from '@nestjs/common';
-import { CreateBlockDto } from '../dto/create-block.dto';
+import {
+  CreateCodeBlockDto,
+  CreateHeading1BlockDto,
+  CreateImageBlockDto,
+  CreateParagraphBlockDto,
+} from '../dto/create-block.dto';
 import { Model, FilterQuery } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Block, BlockDocument } from '../schemas/block.schema';
@@ -12,7 +17,13 @@ import {
 export class BlockService {
   constructor(@InjectModel(Block.name) private blockModel: Model<Block>) {}
 
-  async insertOne(createBlockDto: CreateBlockDto): Promise<Block> {
+  async insertOne(
+    createBlockDto:
+      | CreateCodeBlockDto
+      | CreateParagraphBlockDto
+      | CreateHeading1BlockDto
+      | CreateImageBlockDto,
+  ): Promise<Block> {
     const createdBlock = await this.blockModel.create(createBlockDto);
 
     return createdBlock.save();
