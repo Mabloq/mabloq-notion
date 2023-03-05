@@ -2,11 +2,13 @@ import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
 export class RichText {
-  @Prop({ required: true, default: 'text' })
+  @Prop({ required: true, default: 'rich_text', enum: ['rich_text'] })
   type: string;
+  @Prop({ required: true })
+  plain_text: string;
   @Prop(
     raw({
-      content: { type: String, required: true },
+      text: { type: String, required: true },
       link: { type: String, required: false },
     }),
   )

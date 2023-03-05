@@ -6,6 +6,8 @@ import { CodeBlockDto } from './extra-models/blocks/code.dto';
 import { ImageBlockDto } from './extra-models/blocks/image.dto';
 import { BlockInterface } from '../interfaces';
 import { BlockEnum } from '../schemas/common/block-enum';
+import { Schema } from 'mongoose';
+
 import {
   BlockModelList,
   BlockModelMappings,
@@ -43,7 +45,7 @@ export class CreateBlockDto implements Omit<BlockInterface, 'id' | 'content'> {
       ],
     },
   })
-  children: BlockDTOs[];
+  children: (BlockDTOs | Schema.Types.ObjectId)[];
 }
 
 @ApiExtraModels(CodeBlockDto)

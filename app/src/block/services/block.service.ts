@@ -24,9 +24,22 @@ export class BlockService {
       | CreateHeading1BlockDto
       | CreateImageBlockDto,
   ): Promise<Block> {
-    const createdBlock = await this.blockModel.create(createBlockDto);
+    if (createBlockDto.children.length) {
+      const childrenBlocks = await this.blockModel.create(
+        createBlockDto.children,
+      );
+      const childrenBlocksIds = childrenBlocks.map((b) => b._id);
 
-    return createdBlock.save();
+      const cblock = {
+        ...createBlockDto,
+        children: childrenBlocksIds,
+      };
+      const createdBlock = await this.blockModel.create(cblock);
+      return createdBlock;
+    } else {
+      const createdBlock = await this.blockModel.create(createBlockDto);
+      return createdBlock.save();
+    }
   }
 
   async findMany(blockIds: string[]) {
