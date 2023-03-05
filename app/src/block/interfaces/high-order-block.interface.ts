@@ -1,6 +1,6 @@
 import { ParentInerface } from './common/parent.interface';
-import { PropertyInterface } from './properties/property.interface';
 import { FileObjectInterface } from './common/file-object.interface';
+import { ObjectEnum, ObjectType } from '../schemas/common/object-enum';
 export interface HigherOrderBlockInterface {
   id?: string;
   object: string;

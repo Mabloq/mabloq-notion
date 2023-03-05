@@ -1,15 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { ParentSchema } from './parents/parent.schema';
-import { ImageSchema } from './common/image.schema';
 import { FileObjectInterface } from '../interfaces/common/file-object.interface';
 import { ParentInerface } from '../interfaces/common/parent.interface';
-import { ObjectEnum } from './common/object-enum';
+import { ObjectEnum, ObjectType } from './common/object-enum';
 import { HigherOrderBlockInterface } from '../interfaces/high-order-block.interface';
 import { DatabaseParentSchema } from './parents/database-parent.schema';
 import { PageParentSchema } from './parents/page-parent.schema';
 import mongoose from 'mongoose';
 import { FileObjectSchema } from './common/file-object.schema';
+import { WorkspaceParentSchema } from './parents/workspace-parent.schema';
 
 export enum ParentEnum {
   DATABASE_ID = 'database_id',
@@ -23,7 +23,7 @@ export class HigherOrderBlock implements HigherOrderBlockInterface {
     enum: Object.values(ObjectEnum),
     message: '{VALUE} is not supported',
   })
-  object!: string;
+  object!: ObjectType;
   @Prop({ type: Boolean, default: false })
   archived: boolean;
   @Prop({ type: FileObjectSchema, required: false })
@@ -75,3 +75,7 @@ HigherOrderBlockSchema.path<MongooseSchema.Types.Subdocument>(
 HigherOrderBlockSchema.path<MongooseSchema.Types.Subdocument>(
   'parent',
 ).discriminator('page_id', PageParentSchema);
+
+HigherOrderBlockSchema.path<MongooseSchema.Types.Subdocument>(
+  'parent',
+).discriminator('workspace_id', WorkspaceParentSchema);
