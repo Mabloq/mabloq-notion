@@ -10,10 +10,10 @@ import {
 import { BlockService } from '../services/block.service';
 import {
   CreateBlockDto,
-  CreateCodeBlockDto,
   CreateHeading1BlockDto,
   CreateImageBlockDto,
   CreateParagraphBlockDto,
+  CreateCodeBlockDto,
 } from '../dto/create-block.dto';
 import {
   ApiBody,

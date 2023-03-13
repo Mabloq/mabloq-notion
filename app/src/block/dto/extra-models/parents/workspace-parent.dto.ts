@@ -4,10 +4,10 @@ import { WorkspaceParentInterface } from 'src/block/interfaces/common/parent.int
 @ApiExtraModels()
 export class WorkspaceParentDto implements WorkspaceParentInterface {
   @ApiProperty({
-    default: 'workspace',
+    default: 'workspace_id',
     required: true,
   })
-  type: 'workspace';
+  type: 'workspace_id';
   @ApiProperty({ required: true })
   workspace_id: string;
 }

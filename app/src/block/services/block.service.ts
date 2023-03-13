@@ -1,9 +1,9 @@
 import { Injectable, Post } from '@nestjs/common';
 import {
-  CreateCodeBlockDto,
   CreateHeading1BlockDto,
   CreateImageBlockDto,
   CreateParagraphBlockDto,
+  CreateCodeBlockDto,
 } from '../dto/create-block.dto';
 import { Model, FilterQuery } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -23,24 +23,9 @@ export class BlockService {
       | CreateParagraphBlockDto
       | CreateHeading1BlockDto
       | CreateImageBlockDto,
-  ): Promise<Block | ParagraphBlock> {
-    if (createBlockDto.children.length) {
-      const childrenBlocks = await this.blockModel.create(
-        createBlockDto.children,
-      );
-      const childrenBlocksIds = childrenBlocks.map((b) => b._id);
-
-      const cblock = {
-        ...createBlockDto,
-        children: childrenBlocksIds,
-      };
-      const createdBlock = await this.blockModel.create(cblock);
-      console.log(createdBlock);
-      return createdBlock;
-    } else {
-      const createdBlock = await this.blockModel.create(createBlockDto);
-      return createdBlock.save();
-    }
+  ): Promise<Block> {
+    const createdBlock = await this.blockModel.create(createBlockDto);
+    return createdBlock.save();
   }
 
   async findMany(blockIds: string[]) {

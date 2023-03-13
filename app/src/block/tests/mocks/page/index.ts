@@ -64,7 +64,7 @@ export const mockCreatePageDto = (
       ],
     },
   },
-  parent: ParentInerface = { type: 'page', page_id: 'id-page-1' },
+  parent: ParentInerface = { type: 'page_id', page_id: 'id-page-1' },
   content: BlockDTOs[] = [],
 ): CreatePageDto => {
   const basePage = mockBasePage(id);

@@ -68,7 +68,7 @@ export const mockDatabaseDto = (
       format: 'number',
     },
   },
-  parent: ParentInerface = { type: 'page', page_id: 'id-page-1' },
+  parent: ParentInerface = { type: 'page_id', page_id: 'id-page-1' },
 ): CreateDatabaseDto => {
   const basePage = mockBaseDatabase(id);
 
@@ -88,7 +88,7 @@ export const mockDatabaseDocument = (
   cover: mock?.cover || { type: 'external', url: '' },
   archived: mock?.archived || false,
   last_edited_by: mock?.last_edited_by || 'mabloq',
-  parent: mock?.parent || { type: 'workspace', workspace_id: 'workspace-1' },
+  parent: mock?.parent || { type: 'workspace_id', workspace_id: 'workspace-1' },
   parent_id: mock?.parent_id || 'workspace-1',
   created_by: mock?.created_by || 'mabloq',
   created_time: mock?.created_time || dateIso,

@@ -2,12 +2,15 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { BaseBlockInterface } from '../interfaces/block.interface';
+import { PageParentInterface } from '../interfaces/common/parent.interface';
 import { CodeBlockSchema } from './blocks/code.schema';
 import { Heading1BlockSchema } from './blocks/heading-1.schema';
 import { ImageBlockSchema } from './blocks/image.schema';
 import { ParagraphBlockSchema } from './blocks/paragraph.schema';
 import { BlockEnum, BlockType } from './common/block-enum';
 import { ObjectEnum } from './common/object-enum';
+import { PageParentSchema } from './parents/page-parent.schema';
+import { ParentSchema } from './parents/parent.schema';
 export type BlockDocument = Block & Document;
 
 @Schema({
@@ -31,17 +34,17 @@ export class Block implements BaseBlockInterface {
   })
   type!: BlockType;
 
+  @Prop({ type: PageParentSchema, required: false })
+  parent: PageParentInterface;
+
+  @Prop({ type: Number, isInteger: true, required: true, default: 0 })
+  indent: number;
+
   @Prop()
   updated_by: string; //TODO: Partial<User>
 
   @Prop()
   has_children: boolean;
-
-  @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Block' }],
-    required: false,
-  })
-  children: string[];
 
   @Prop({
     type: Date,

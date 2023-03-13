@@ -5,8 +5,18 @@ import { ReferenceObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.i
 import { getSchemaPath } from '@nestjs/swagger';
 import { ImageDto } from './blocks/image.dto';
 import { BlockEnum } from 'src/block/schemas/common/block-enum';
+import {
+  CreateCodeBlockDto,
+  CreateHeading1BlockDto,
+  CreateImageBlockDto,
+  CreateParagraphBlockDto,
+} from '../create-block.dto';
 
-export type BlockDTOs = CodeDto | ParagraphDto | Heading1Dto | ImageDto;
+export type BlockDTOs =
+  | CreateCodeBlockDto
+  | CreateParagraphBlockDto
+  | CreateHeading1BlockDto
+  | CreateImageBlockDto;
 
 export const BlockModelRefs: ReferenceObject[] = [
   { $ref: getSchemaPath(CodeDto) },

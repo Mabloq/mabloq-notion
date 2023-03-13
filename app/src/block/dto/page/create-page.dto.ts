@@ -7,17 +7,15 @@ import { NumberPropertyDto } from '../extra-models/properties/property-types/num
 import { SelectPropertyDto } from '../extra-models/properties/property-types/select-property.dto';
 import { TitlePropertyDto } from '../extra-models/properties/property-types/title-property.dto';
 import { PageInterface } from 'src/block/interfaces/page.interface';
-import { ParagraphBlockDto } from '../extra-models/blocks/paragraph.dto';
-import { CodeBlockDto } from '../extra-models/blocks/code.dto';
-import { Heading1BlockDto } from '../extra-models/blocks/heading1.dto';
-import { ImageBlockDto } from '../extra-models/blocks/image.dto';
+
 import { BlockDTOs, BlockModelRefs } from '../extra-models/block-models';
 import { ParentInerface } from 'src/block/interfaces/common/parent.interface';
 import { DatabaseParentDto } from '../extra-models/parents/database-parent.dto';
 import { PageParentDto } from '../extra-models/parents/page-parent.dto';
 
+import { ObjectEnum } from 'src/block/schemas/common/object-enum';
 export class CreatePageDto implements Omit<PageInterface, 'id' | 'content'> {
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: true, enum: Object.values(ObjectEnum) })
   object: string;
   @ApiProperty()
   parent_id?: string;
@@ -43,13 +41,14 @@ export class CreatePageDto implements Omit<PageInterface, 'id' | 'content'> {
   last_edited_by: string;
   @ApiProperty()
   last_edited_time: string;
-  @ApiProperty({
-    type: 'array',
-    items: {
-      $ref: getSchemaPath(RichTextDto),
-    },
-    required: true,
-  })
+  // @ApiProperty({
+  //   type: 'array',
+  //   items: {
+  //     $ref: getSchemaPath(RichTextDto),
+  //   },
+  //   required: true,
+  // })
+  // title: RichTextDto[];
   @ApiProperty({
     type: 'object',
     additionalProperties: {

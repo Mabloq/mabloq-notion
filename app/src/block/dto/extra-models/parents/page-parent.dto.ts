@@ -4,10 +4,10 @@ import { PageParentInterface } from 'src/block/interfaces/common/parent.interfac
 @ApiExtraModels()
 export class PageParentDto implements PageParentInterface {
   @ApiProperty({
-    default: 'page',
+    default: 'page_id',
     required: true,
   })
-  type: 'page';
+  type: 'page_id';
   @ApiProperty({ required: true })
   page_id: string;
 }

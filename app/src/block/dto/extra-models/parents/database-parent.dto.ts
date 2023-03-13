@@ -4,10 +4,10 @@ import { DatabaseParentInterface } from 'src/block/interfaces/common/parent.inte
 @ApiExtraModels()
 export class DatabaseParentDto implements DatabaseParentInterface {
   @ApiProperty({
-    default: 'database',
+    default: 'database_id',
     required: true,
   })
-  type: 'database';
+  type: 'database_id';
   @ApiProperty({ required: true })
   database_id: string;
 }
