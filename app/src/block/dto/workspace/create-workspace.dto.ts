@@ -13,10 +13,7 @@ export class CreateWorkspaceDto
   @ApiProperty({ items: { $ref: getSchemaPath(FileObjectDto) } })
   icon?: FileObjectInterface;
   @ApiProperty({
-    type: 'object',
-    additionalProperties: {
-      anyOf: [{ $ref: getSchemaPath(TitlePropertyDto) }],
-    },
+    type: TitlePropertyDto,
   })
   properties: {
     title: TitlePropertyInterface;

@@ -38,6 +38,13 @@ export class WorkspaceService {
     return createdBlock.save();
   }
 
+  async findAll() {
+    const findQuery: FilterQuery<HigherOrderBlock> = {
+      object: 'workspace',
+    };
+    return await this.higherOrderBlockModel.find(findQuery).limit(10);
+  }
+
   async findChildren(parentId: string) {
     const findQuery: FilterQuery<HigherOrderBlock> = {
       parent_id: parentId,
