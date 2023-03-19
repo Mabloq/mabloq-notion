@@ -11,6 +11,7 @@ import { BlockEnum, BlockType } from './common/block-enum';
 import { ObjectEnum } from './common/object-enum';
 import { PageParentSchema } from './parents/page-parent.schema';
 import { ParentSchema } from './parents/parent.schema';
+
 export type BlockDocument = Block & Document;
 
 @Schema({

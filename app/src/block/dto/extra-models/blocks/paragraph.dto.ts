@@ -9,6 +9,6 @@ export class ParagraphDto {
     required: true,
   })
   rich_text: RichTextDto[];
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, default: 'black' })
   color: string;
 }

@@ -9,7 +9,7 @@ import { Heading1BlockSchema } from './schemas/blocks/heading-1.schema';
 import { ImageBlockSchema } from './schemas/common/image.schema';
 import { CodeBlockSchema } from './schemas/blocks/code.schema';
 import { DatabaseSchema } from './schemas/database.schema';
-import { PageSchema } from './schemas/page.schema';
+import { Page, PageSchema } from './schemas/page.schema';
 import {
   HigherOrderBlock,
   HigherOrderBlockSchema,
@@ -19,6 +19,9 @@ import { DatabaseService } from './services/database.service';
 import { DatabaseController } from './controllers/database.controller';
 import { PageService } from './services/page.service';
 import { WorkspaceSchema } from './schemas/workspace.schema';
+import { PageController } from './controllers/page.controller';
+import { WorkspaceService } from './services/workspace.service';
+import { WorkspaceController } from './controllers/workspace.controller';
 
 @Module({
   imports: [
@@ -45,8 +48,19 @@ import { WorkspaceSchema } from './schemas/workspace.schema';
         ],
       },
     ]),
+    MongooseModule.forFeature([
+      {
+        name: Page.name,
+        schema: PageSchema,
+      },
+    ]),
   ],
-  providers: [BlockService, DatabaseService, PageService],
-  controllers: [BlockController, DatabaseController],
+  providers: [BlockService, DatabaseService, PageService, WorkspaceService],
+  controllers: [
+    BlockController,
+    DatabaseController,
+    PageController,
+    WorkspaceController,
+  ],
 })
 export class BlockModule {}

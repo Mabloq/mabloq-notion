@@ -54,6 +54,20 @@ export class BlockController {
   }
 
   @ApiTags('Block')
+  @Post(':index')
+  createAtIndex(
+    @Param('index') index: string,
+    @Body()
+    createBlockDto:
+      | CreateCodeBlockDto
+      | CreateHeading1BlockDto
+      | CreateImageBlockDto
+      | CreateParagraphBlockDto,
+  ) {
+    return this.blockService.insertOneAtIndex(createBlockDto, index);
+  }
+
+  @ApiTags('Block')
   @Get()
   findAll() {
     return this.blockService.findAll();

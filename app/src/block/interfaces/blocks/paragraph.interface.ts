@@ -3,7 +3,7 @@ import { RichTextInterface } from '../common/rich-text.interface';
 
 export interface ParagraphInterface {
   rich_text: RichTextInterface[];
-  children?: BlockInterface[];
+  color?: string;
 }
 export interface ParagraphBlockInterface extends BaseBlockInterface {
   paragraph: ParagraphInterface;

@@ -25,7 +25,6 @@ export class Heading1Block implements Heading1BlockInterface {
   created_time: string;
   updated_by: string; //TODO: Partial<User>
   last_edited_time: string;
-  has_children: boolean;
   @Prop({ type: Heading1, required: true })
   heading_1: Heading1;
 }

@@ -31,13 +31,11 @@ const mockBlock = (
   created_time = dateIso,
   last_edited_time = dateIso,
   updated_by = 'mabloq',
-  has_children = false,
 ): BaseBlockInterface => ({
   id,
   object,
   type,
   updated_by,
-  has_children,
   created_time,
   last_edited_time,
 });
@@ -59,7 +57,6 @@ export const mockParagraphBlock = (
     created_time,
     last_edited_time,
     updated_by,
-    has_children,
   );
 
   return {
@@ -82,7 +79,6 @@ export const mockCodeBlock = (
   created_time = dateIso,
   last_edited_time = dateIso,
   updated_by = 'mabloq',
-  has_children = false,
 ): CodeBlockInterface => {
   const baseBlock = mockBlock(
     id,
@@ -91,7 +87,6 @@ export const mockCodeBlock = (
     created_time,
     last_edited_time,
     updated_by,
-    has_children,
   );
 
   return {
@@ -114,7 +109,6 @@ export const mockParagraphBlockDocument = (
   updated_by: mock?.updated_by || 'mabloq',
   created_time: mock?.created_time || dateIso,
   last_edited_time: mock?.last_edited_time || dateIso,
-  has_children: mock?.has_children || false,
   paragraph: mock.paragraph,
 });
 
@@ -127,7 +121,6 @@ export const mockCodeBlockDocument = (
   updated_by: mock?.updated_by || 'mabloq',
   created_time: mock?.created_time || dateIso,
   last_edited_time: mock?.last_edited_time || dateIso,
-  has_children: mock?.has_children || false,
   code: mock.code,
 });
 

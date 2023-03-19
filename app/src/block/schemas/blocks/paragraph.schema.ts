@@ -19,8 +19,6 @@ export class Paragraph implements ParagraphInterface {
   rich_text: RichTextInterface[];
   @Prop({ required: false })
   color: string;
-  @Prop({ type: BlockSchema, required: false })
-  children: BlockInterface[];
 }
 
 export const ParagraphSchema = SchemaFactory.createForClass(Paragraph);
@@ -32,8 +30,6 @@ export class ParagraphBlock implements ParagraphBlockInterface {
   updated_by: string;
   created_time: string;
   last_edited_time: string;
-  has_children: boolean;
-  children?: string[];
   @Prop({ type: ParagraphSchema, required: true })
   paragraph: ParagraphInterface;
 }

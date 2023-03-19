@@ -10,12 +10,18 @@ import { PageParentSchema } from './parents/page-parent.schema';
 import mongoose from 'mongoose';
 import { FileObjectSchema } from './common/file-object.schema';
 import { WorkspaceParentSchema } from './parents/workspace-parent.schema';
+import { PageSchema } from './page.schema';
+import { WorkspaceSchema } from './workspace.schema';
+import { DatabaseSchema } from './database.schema';
 
 export enum ParentEnum {
   DATABASE_ID = 'database_id',
   PAGE_ID = 'page_id',
 }
-@Schema({ discriminatorKey: 'object' })
+@Schema({
+  discriminatorKey: 'object',
+  timestamps: { createdAt: 'created_time', updatedAt: 'last_edited_time' },
+})
 export class HigherOrderBlock implements HigherOrderBlockInterface {
   @Prop({
     type: String,
@@ -23,7 +29,7 @@ export class HigherOrderBlock implements HigherOrderBlockInterface {
     enum: Object.values(ObjectEnum),
     message: '{VALUE} is not supported',
   })
-  object!: ObjectType;
+  object!: string;
   @Prop({ type: Boolean, default: false })
   archived: boolean;
   @Prop({ type: FileObjectSchema, required: false })
@@ -68,6 +74,13 @@ HigherOrderBlockSchema.index(
     partialFilterExpression: { index: { $exists: true, $gt: '' } },
   },
 );
+
+HigherOrderBlockSchema.discriminators = {
+  page: PageSchema,
+  database: DatabaseSchema,
+  workspace: WorkspaceSchema,
+};
+
 HigherOrderBlockSchema.path<MongooseSchema.Types.Subdocument>(
   'parent',
 ).discriminator('database_id', DatabaseParentSchema);

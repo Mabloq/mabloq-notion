@@ -13,7 +13,6 @@ export class ImageBlock implements ImageBlockInterface {
   updated_by: string;
   created_time: string;
   last_edited_time: string;
-  has_children: boolean;
   @Prop({ type: FileObjectSchema, required: true })
   image: FileObjectInterface;
 }
