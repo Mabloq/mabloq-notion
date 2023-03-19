@@ -15,7 +15,7 @@ import { SelectConfigSchema } from './properties/property-config/select-config-s
 import { NumberConfigSchema } from './properties/property-config/number-config-schema';
 import { ObjectType } from './common/object-enum';
 
-@Schema({ _id: false })
+@Schema()
 export class Database implements DatabaseInterface {
   object!: string;
   archived: boolean;
