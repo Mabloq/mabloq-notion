@@ -1,15 +1,15 @@
 export interface DatabaseParentInterface {
-  type: 'database_id';
+  type: string;
   database_id: string;
 }
 
 export interface PageParentInterface {
-  type: 'page_id';
+  type: string;
   page_id: string;
 }
 
 export interface WorkspaceParentInterface {
-  type: 'workspace_id';
+  type: string;
   workspace_id: string;
 }
 

@@ -13,10 +13,7 @@ export interface BasePropertyInterface {
   type: PropertyType;
 }
 
-export interface PropertiesInterface {
-  title: PropertyInterface;
-  [key: string | symbol]: PropertyInterface;
-}
+export type PropertiesInterface = Record<string, PropertyInterface>;
 
 export interface PropertiesConfigInterface {
   title: PropertyConfigInterface;

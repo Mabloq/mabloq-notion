@@ -4,8 +4,8 @@ import { NumberPropertyInterface } from 'src/block/interfaces/properties/propert
 
 @ApiExtraModels()
 export class NumberPropertyDto implements NumberPropertyInterface {
-  @ApiProperty({ default: 'number' })
-  type: 'number';
+  @ApiProperty({ enum: ['number'], default: 'number' })
+  type: string;
   @ApiProperty()
   number: number;
 }

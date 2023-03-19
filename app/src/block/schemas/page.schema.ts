@@ -30,7 +30,7 @@ export class Page implements PageInterface {
   last_edited_by: string; //TODO: Partial<User>
   @Prop({
     type: Map,
-    of: PropertySchema,
+    of: MongooseSchema.Types.Mixed,
     discriminators: [
       { name: PropertyTypeEnum.RICH_TEXT, schema: RichTextPropertySchema },
       { name: PropertyTypeEnum.SELECT, schema: SelectPropertySchema },
@@ -38,14 +38,11 @@ export class Page implements PageInterface {
       { name: PropertyTypeEnum.TITLE, schema: TitlePropertySchema },
     ],
   })
-  properties: {
-    title: PropertyInterface;
-    [key: string | symbol]: PropertyInterface;
-  };
+  properties: Record<string, PropertyInterface>;
   @Prop({ type: Boolean, default: false })
   has_content: boolean;
   @Prop({ type: mongoose.Types.ObjectId, ref: 'Block' })
-  content: string[];
+  content: mongoose.Types.ObjectId[];
 }
 export type PageDocument = Page & Document;
 export const PageSchema = SchemaFactory.createForClass(Page);

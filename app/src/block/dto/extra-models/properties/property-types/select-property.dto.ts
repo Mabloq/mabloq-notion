@@ -1,20 +1,16 @@
 import { ApiExtraModels, ApiProperty, getSchemaPath } from '@nestjs/swagger';
 import { SelectPropertyInterface } from 'src/block/interfaces/properties/property-types/select-property.interface';
 
-@ApiExtraModels()
 export class SelectNameDto {
   @ApiProperty()
   name: string;
 }
-@ApiExtraModels()
+@ApiExtraModels(SelectNameDto)
 export class SelectPropertyDto implements SelectPropertyInterface {
   @ApiProperty()
-  type: 'select';
+  type: string;
   @ApiProperty({
-    type: 'object',
-    additionalProperties: {
-      $ref: getSchemaPath(SelectNameDto),
-    },
+    type: SelectNameDto,
   })
   select: { name: string };
 }

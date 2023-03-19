@@ -10,7 +10,7 @@ export enum NumberConfigEnum {
 
 export class NumberConfigDto implements NumberConfigInterface {
   @ApiProperty({ enum: ['number'] })
-  type: 'number';
+  type: string;
   @ApiProperty({ type: 'string', enum: Object.values(NumberConfigEnum) })
   format: NumberConfigEnum;
 }

@@ -1,8 +1,10 @@
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { MultiSelectPropertyInterface } from 'src/block/interfaces/properties/property-types/multi-select-property.interface';
 
 @Schema()
-export class MultiSelectProperty {
+export class MultiSelectProperty implements MultiSelectPropertyInterface {
+  type: string;
   @Prop(
     raw({
       name: { type: [{ name: String }], required: true },

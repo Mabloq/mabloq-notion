@@ -14,12 +14,15 @@ import {
 import { DatabaseService } from './database.service';
 import PageParentValidator from '../utils/page-validators/validators/page-parent-validator';
 import DatabaseParentValidator from '../utils/page-validators/validators/database-parent-validator';
+import { Page } from '../schemas/page.schema';
 
 @Injectable()
 export class PageService {
   constructor(
     @InjectModel(HigherOrderBlock.name)
-    private higherOrderBlockModel: Model<HigherOrderBlock>,
+    private pageModel: Model<HigherOrderBlock>,
+    @InjectModel(Block.name)
+    private blockModel: Model<Block>,
     private dataBaseService: DatabaseService,
   ) {}
 
@@ -34,25 +37,44 @@ export class PageService {
       await dbParentValidator.validate(database.properties);
     }
 
+    if (createPageDto.content.length) {
+      const childrenBlocks = await this.blockModel.create(
+        createPageDto.content,
+      );
+      const childrenBlocksIds = childrenBlocks.map((b) => b._id);
+
+      const cblock = {
+        ...createPageDto,
+        content: childrenBlocksIds,
+      };
+      const createdBlock = await this.pageModel.create(cblock);
+      return createdBlock.save();
+    }
+
     //check if CreatePageDto has blocks children
     //If has block children, create all of othem and map results to array of ObjectIds and add them to Page
-    const createdBlock = await this.higherOrderBlockModel.create(createPageDto);
+    const createdBlock = await this.pageModel.create(createPageDto);
 
     return createdBlock.save();
   }
 
+  async findAll() {
+    const findQuery: FilterQuery<Page> = {
+      object: 'page',
+    };
+    return await this.pageModel.find(findQuery).limit(10);
+  }
+
   async findChildren(parentId: string) {
-    const findQuery: FilterQuery<HigherOrderBlock> = {
+    const findQuery: FilterQuery<Page> = {
       parent_id: parentId,
     };
-    const fetchedBlocks = await this.higherOrderBlockModel
-      .find(findQuery)
-      .exec();
+    const fetchedBlocks = await this.pageModel.find(findQuery).exec();
     return fetchedBlocks;
   }
 
   async findOne(id: string) {
-    return await this.higherOrderBlockModel.findById(id);
+    return await this.pageModel.findById(id);
   }
 
   //   async findDatabasePages()

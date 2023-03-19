@@ -1,4 +1,4 @@
 export interface SelectPropertyInterface {
-  type: 'select';
+  type: string;
   select: { name: string };
 }

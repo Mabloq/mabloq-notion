@@ -1,4 +1,4 @@
 export interface NumberPropertyInterface {
-  type: 'number';
+  type: string;
   number: number;
 }

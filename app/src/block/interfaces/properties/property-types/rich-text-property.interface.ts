@@ -1,5 +1,5 @@
 import { RichTextInterface } from '../../common/rich-text.interface';
 export interface RichTextPropertyInterface {
-  type: 'rich_text';
+  type: string;
   rich_text: RichTextInterface[];
 }

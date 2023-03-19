@@ -10,8 +10,6 @@ export interface BaseBlockInterface {
   created_time: string;
   last_edited_time: string;
   updated_by: string;
-  has_children: boolean;
-  children?: string[];
 }
 
 export type BlockInterface =

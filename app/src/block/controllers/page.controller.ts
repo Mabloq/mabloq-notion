@@ -7,21 +7,30 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { CreateDatabaseDto } from '../dto/database/create-database.dto';
-import { DatabaseService } from '../services/database.service';
+import { ApiTags } from '@nestjs/swagger';
+import { CreatePageDto } from '../dto/page/create-page.dto';
+import { PageService } from '../services/page.service';
 
 @Controller('/api/rest/v1/page')
 export class PageController {
-  constructor(private readonly databaseService: DatabaseService) {}
-
+  constructor(private readonly pageService: PageService) {}
+  @ApiTags('Page')
   @Post()
-  create(@Body() createDatabaseDto: CreateDatabaseDto) {
-    return this.databaseService.insertOne(createDatabaseDto);
+  create(@Body() createPageDto: CreatePageDto) {
+    console.log(createPageDto);
+    return this.pageService.insertOne(createPageDto);
   }
 
+  @ApiTags('Page')
+  @Get()
+  findAll() {
+    return this.pageService.findAll();
+  }
+
+  @ApiTags('Page')
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.databaseService.findOne(id);
+    return this.pageService.findOne(id);
   }
 
   // @Patch(':id')

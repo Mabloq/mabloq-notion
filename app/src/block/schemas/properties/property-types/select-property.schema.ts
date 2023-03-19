@@ -1,8 +1,11 @@
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { SelectPropertyInterface } from 'src/block/interfaces/properties/property-types/select-property.interface';
+import { Property } from '../property.schema';
 
 @Schema()
-export class SelectProperty {
+export class SelectProperty implements SelectPropertyInterface {
+  type: string;
   @Prop(
     raw({
       name: { type: String, required: true },

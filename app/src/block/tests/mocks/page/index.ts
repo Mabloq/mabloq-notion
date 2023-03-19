@@ -5,7 +5,7 @@ import { PageInterface } from 'src/block/interfaces/page.interface';
 import { PropertiesInterface } from 'src/block/interfaces/properties/property.interface';
 import { HigherOrderBlockDocument } from 'src/block/schemas/higher-order-block.schema';
 import { PageDocument } from 'src/block/schemas/page.schema';
-
+import { Types } from 'mongoose';
 const dateIso = new Date().toISOString();
 const mockBasePage = (
   id = 'a uuid',
@@ -38,7 +38,7 @@ export const mockPage = (
       ],
     },
   },
-  content: string[],
+  content: Types.ObjectId[],
 ): PageInterface => {
   const basePage = mockBasePage(id);
 
@@ -86,5 +86,5 @@ export const mockPageDocument = (
   created_time: mock?.created_time || dateIso,
   last_edited_time: mock?.last_edited_time || dateIso,
   has_content: mock?.has_content || false,
-  content: mock?.content || ['block uuid'],
+  content: mock?.content || [new Types.ObjectId('block uuid')],
 });

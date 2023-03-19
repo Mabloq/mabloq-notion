@@ -1,4 +1,4 @@
 export interface MultiSelectPropertyInterface {
-  type: 'multi_select';
+  type: string;
   multi_select: Array<{ name: string }>;
 }
