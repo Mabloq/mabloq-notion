@@ -2,9 +2,10 @@ import {
   registerDecorator,
   ValidationOptions,
   ValidationArguments,
-} from '@nestjs/class-validator';
+} from 'class-validator';
 import { BlockEnum } from 'src/block/schemas/common/block-enum';
 import { RichTextInterface } from 'src/block/interfaces/common/rich-text.interface';
+import { RichTextDto } from '../extra-models/common/rich-text.dto';
 export function IsPropertyValue(
   property: string,
   validationOptions?: ValidationOptions,
@@ -18,16 +19,12 @@ export function IsPropertyValue(
       options: validationOptions,
       validator: {
         validate(data, args: ValidationArguments) {
-          console.log('data', data);
           const results = getErrorTypes(data);
           return results.every((r) => r == 'SAFE');
         },
         defaultMessage(args?: ValidationArguments) {
           const [relatedPropertyName] = args.constraints;
           const relatedValue = (args.object as any)[relatedPropertyName];
-
-          //   console.log(args.object);
-          //   console.log(relatedValue);
 
           return `${getErrorTypes(relatedValue)
             .filter((v) => v != 'SAFE')
@@ -44,6 +41,9 @@ function getErrorTypes(properties: Record<string, any>) {
     if ('type' in value) {
       switch (value.type) {
         case 'rich_text':
+          const cl = new RichTextDto();
+          console.log('cl', Object.getOwnPropertyNames(cl));
+          console.log('cl2', Object.getPrototypeOf(cl));
           const rConfig: ValidationPropertyConfig = {
             property: value.type,
             type: 'nested',
@@ -53,6 +53,13 @@ function getErrorTypes(properties: Record<string, any>) {
               { name: 'type', type: 'string' },
               { name: 'text', type: 'object' },
             ],
+            nestedField: {
+              property: 'text',
+              fields: [
+                { name: 'text', type: 'string' },
+                { name: 'link', type: 'string' },
+              ],
+            },
           };
           return validateProperty(value, rConfig);
         case 'title':
@@ -80,7 +87,7 @@ function getErrorTypes(properties: Record<string, any>) {
             type: 'number',
             fields: [
               { name: 'type', type: 'string' },
-              { name: 'number', type: 'string' },
+              { name: 'number', type: 'number' },
             ],
           };
           return validateProperty(value, nConfig);
@@ -132,7 +139,7 @@ function validateProperty(value: any, config: ValidationPropertyConfig) {
   const correctTypes = vkeys.every((v) => {
     const field = config.fields.find((f) => f.name == v);
     if (typeof field != 'undefined') {
-      return validType(value, field.type);
+      return validType(value[v], field.type);
     } else {
       return false;
     }
@@ -140,8 +147,11 @@ function validateProperty(value: any, config: ValidationPropertyConfig) {
   const invalidTypes = vkeys
     .map((v) => {
       const field = config.fields.find((f) => f.name == v);
-      if (typeof field != 'undefined') {
-        return validTypeMessage(v, value[v][field.name], field.type);
+      if (
+        typeof field != 'undefined' &&
+        typeof value[field.name] != 'undefined'
+      ) {
+        return validTypeMessage(v, value[field.name], field.type);
       } else {
         return 'NOT FOUND';
       }
@@ -159,16 +169,57 @@ function validateProperty(value: any, config: ValidationPropertyConfig) {
     const nwrongKeys = nkeys.filter(
       (v) => !config.nestedField.fields.map((f) => f.name).includes(v),
     );
+    const ncorrectTypes = nkeys.every((v) => {
+      const field = config.nestedField.fields.find((f) => f.name == v);
+      if (typeof field != 'undefined') {
+        return validType(
+          value[config.nestedField.property][field.name],
+          field.type,
+        );
+      } else {
+        return false;
+      }
+    });
+    const ninvalidTypes = nkeys
+      .map((v) => {
+        const field = config.nestedField.fields.find((f) => f.name == v);
+        if (
+          typeof field != 'undefined' &&
+          typeof field.name != 'undefined' &&
+          typeof value[config.nestedField.property][field.name] != 'undefined'
+        ) {
+          return validTypeMessage(
+            v,
+            value[config.nestedField.property][field.name],
+            field.type,
+          );
+        } else {
+          return 'NOT FOUND';
+        }
+      })
+      .filter((m) => !['NOT FOUND', 'SAFE'].includes(m));
     return allowed_keys &&
       every_keys &&
       nallowed_keys &&
       nevery_keys &&
-      correctTypes
+      ncorrectTypes
       ? 'SAFE'
-      : `[ properties.${config.nestedField.property} - { invalid properties: '${nwrongKeys}' }  ]`;
+      : `[ properties.${config.property}.${config.nestedField.property} - { ${
+          !nallowed_keys || !nevery_keys
+            ? 'invalid properties: ' + wrongKeys.concat(nwrongKeys) + ', '
+            : ''
+        }${
+          !ncorrectTypes && ninvalidTypes.length
+            ? 'invalid types: ' + invalidTypes.concat(ninvalidTypes) + ' '
+            : ''
+        }}]`;
   } else {
     return allowed_keys && every_keys && correctTypes
       ? 'SAFE'
-      : `[ properties.${config.property} - { invalid properties: '${wrongKeys}', invalid types: ${invalidTypes} } ]`;
+      : `[ properties.${config.property} - { ${
+          !allowed_keys || !every_keys
+            ? 'invalid properties:' + wrongKeys + ', '
+            : ''
+        }${correctTypes == false ? 'invalid types:' + invalidTypes : ''}}]`;
   }
 }
